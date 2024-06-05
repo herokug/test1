@@ -114,8 +114,13 @@ const generateCanvasImage = async (text) => {
   drawGlowingText(ctx, text, canvas.width / 2, canvas.height / 2, 'bold 80px Arial');
 
   // Save canvas image to a file
-  const imageFileName = `up.png`;
-  const out = fs.createWriteStream(imageFileName);
+  // const imageFileName = `up.png`;
+
+  const imageFileName = `up.png`; // Change the image file path
+  const currentDir = new URL('.', import.meta.url).pathname; // Get current directory path
+  const out = fs.createWriteStream(currentDir + '/' + imageFileName);
+
+  // const out = fs.createWriteStream(imageFileName);
   const stream = canvas.createPNGStream();
   stream.pipe(out);
 
@@ -177,13 +182,13 @@ const randomColor = () => {
 // Function to wait for navigation with a timeout
 const waitForNavigationWithTimeout = async (page, timeout) => {
   try {
-  return Promise.race([
-    page.waitForNavigation({ timeout }),
-    new Promise((_, reject) => setTimeout(() => reject(new Error('Navigation timeout')), timeout))
-  ]);
-} catch (error) {
-  
-}
+    return Promise.race([
+      page.waitForNavigation({ timeout }),
+      new Promise((_, reject) => setTimeout(() => reject(new Error('Navigation timeout')), timeout))
+    ]);
+  } catch (error) {
+
+  }
 };
 
 
@@ -205,16 +210,16 @@ const fileContent = readTextFile('test.txt');
     // Launch a headless browser
     const browser = await launch({
       args: [
-          "--disable-setuid-sandbox",
-          "--no-sandbox",
-          "--single-process",
-          "--no-zygote",
+        "--disable-setuid-sandbox",
+        "--no-sandbox",
+        "--single-process",
+        "--no-zygote",
       ],
       executablePath:
-          process.env.NODE_ENV === "production"
-              ? process.env.PUPPETEER_EXECUTABLE_PATH || executablePath()
-              : executablePath(),
-  });
+        process.env.NODE_ENV === "production"
+          ? process.env.PUPPETEER_EXECUTABLE_PATH || executablePath()
+          : executablePath(),
+    });
 
     // Open a new page
     const page = await browser.newPage();
@@ -234,7 +239,7 @@ const fileContent = readTextFile('test.txt');
     await waitForNavigationWithTimeout(page, 30000); // Increased timeout to 30 seconds
 
     // Loop to submit the form 10 times
-    for (let i = 0 ; i < 10000000000000; i++) {
+    for (let i = 0; i < 10000000000000; i++) {
       // Go to the compose page
       await page.goto('https://sithuwili.com/compose');
 
@@ -279,7 +284,7 @@ const fileContent = readTextFile('test.txt');
       await delay(3000);
 
       // Remove the image file
-      fs.unlinkSync('./up.png');
+      fs.unlinkSync(imageFileName);
     }
 
     // Close the browser
