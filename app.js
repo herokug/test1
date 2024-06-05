@@ -281,7 +281,7 @@ const fileContent = readTextFile('test.txt');
       }
 
       // Wait for 2 seconds
-      await delay(3000);
+      // await delay(3000);
 
       // Remove the image file
       fs.unlinkSync(imageFileName);
