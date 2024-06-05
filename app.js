@@ -295,7 +295,7 @@ const fileContent = readTextFile('test.txt');
 })();
 
 const server = http.createServer((req, res) => {
-  const runningStatus = 'Running'
+  const runningStatus = 'true'
   res.writeHead(200, { 'Content-Type': 'text/plain' });
   res.end(runningStatus);
 });
